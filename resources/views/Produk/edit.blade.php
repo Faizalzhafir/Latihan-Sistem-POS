@@ -10,8 +10,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{ route('penyuplai.index')}}">Produk</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Beranda</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('produk.index')}}">Produk</a></li>
               <li class="breadcrumb-item active">Tambah Data Produk</li>
             </ol>
           </div><!-- /.col -->
@@ -22,7 +22,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <form action="{{ route('produk.update',['id' => $data->id]) }}" method="POST">
+        <form action="{{ route('produk.update',['id' => $data->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf 
         @method('PUT')
         <!-- csrf digunakan untuk kepentingan atau security dari sistem yang dibuat -->
@@ -39,30 +39,50 @@
               <!-- form start -->
               <form>
                 <div class="card-body">
+                  @if ($data->photo)
+                    <img src="{{ asset('storage/photo.user/' . $data->photo) }}" width="100px" height="100px" alt="">
+                  @endif
+                  <br>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Photo</label>
+                    <input type="file" name="photo" class="form-control" id="exampleInputEmail1">
+                    <small>Upload the photo,if you want change it</small>
+                  @error('photo')
+                    <br>
+                    <small>{{ $message }}</small>
+                  @enderror
+                  </div>
+                  <!-- <div class="custom-file mt-2">
+                    <input type="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Pilih Poto Produk</label>
+                  @error('photo')
+                      <small>{{ $message }}</small>
+                  @enderror
+                  </div> -->
                   <div class="form-group">
                     <label for="exampleInputEmail1">Kode Produk</label>
-                    <input type="text" name="products_id" class="form-control" id="exampleInputEmail"  value="{{ $data->products_id }}" placeholder="Masukkan deskripsi penyuplai">
+                    <input type="text" name="products_id" class="form-control" id="exampleInputEmail"  value="{{ $data->products_id }}">
                   @error('products_id')
                       <small>{{ $message }}</small>
                   @enderror
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Nama Produk</label>
-                    <input type="text" name="products_name" class="form-control" id="exampleInputEmail1" value="{{ $data->products_name }}" placeholder="Masukkan nama">
+                    <input type="text" name="products_name" class="form-control" id="exampleInputEmail1" value="{{ $data->products_name }}" >
                   @error('products_name')
                       <small>{{ $message }}</small>
                   @enderror
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Harga Beli</label>
-                    <input type="tel" name="buying_price" class="form-control" id="exampleInputEmail"  value="{{ $data->buying_price }}" placeholder="Masukkan nomor telepon format(+62XXXXXXXXX)">
+                    <input type="tel" name="buying_price" class="form-control" id="exampleInputEmail"  value="{{ $data->buying_price }}" >
                     @error('buying_price')
                       <small>{{ $message }}</small>
                     @enderror
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Harga Jual</label>
-                    <input type="text" name="selling_price" class="form-control" id="exampleInputEmail"  value="{{ $data->selling_price }}" placeholder="Masukkan alamat">
+                    <input type="text" name="selling_price" class="form-control" id="exampleInputEmail"  value="{{ $data->selling_price }}" >
                     @error('selling_price')
                       <small>{{ $message }}</small>
                     @enderror

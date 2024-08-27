@@ -39,14 +39,14 @@ class PenyuplaiController extends Controller
 
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator); //jika validasinya gagal(ada yang belum diisi),maka sistemnya akan kembali ke halamnan sebelumnya,dengan apa yang diinputkan,dan dengan apa saja yang membuat error(mengirim pesan validasinya),dengan $validatornya
 
-        $data['supplier_name']  = $request->customer_name; //syntax disamping memberikan perintah untuk inputan yang dilakukan di form user tadi agar dapat masuk ke database,isian arry harus sama dengan yang ada pada field database
-        $data['telephone']      = $request->phone;
-        $data['address']        = $request->live;
-        $data['descriptions']    = $request->status;
+        $data['supplier_name']  = $request->supplier_name; //syntax disamping memberikan perintah untuk inputan yang dilakukan di form user tadi agar dapat masuk ke database,isian arry harus sama dengan yang ada pada field database
+        $data['telephone']      = $request->telephone;
+        $data['address']        = $request->address;
+        $data['descriptions']   = $request->descriptions;
 
         Penyuplai::create($data); //pada saat user menginputkan data,maka akan kembali ke halaman index
 
-        return redirect()->route('pelanggan.index'); //disambungkan dengan syntax ini
+        return redirect()->route('penyuplai.index'); //disambungkan dengan syntax ini
     }
 
     public function edit(Request $request,$id){
@@ -61,19 +61,19 @@ class PenyuplaiController extends Controller
             'supplier_name'    => 'required',
             'telephone'        => 'required',
             'address'          => 'required',
-            'descriptioms'      => 'required',
+            'descriptions'     => 'required',
         ]);
 
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
-        $data['supplier_name']  = $request->customer_name;
-        $data['telephone']      = $request->phone;
-        $data['address']        = $request->live;
-        $data['descriptions']    = $request->status;
+        $data['supplier_name']  = $request->supplier_name;
+        $data['telephone']      = $request->telephone;
+        $data['address']        = $request->address;
+        $data['descriptions']   = $request->descriptions;
 
         Penyuplai::whereId($id)->update($data);
 
-        return redirect()->route('pelanggan.index');
+        return redirect()->route('penyuplai.index');
     }
 
     public function delete(Request $request,$id){
@@ -83,6 +83,6 @@ class PenyuplaiController extends Controller
             $data->delete();
         } //jika ada ,maka delete/hapus datanya
 
-        return redirect()->route('pelanggan.index');
+        return redirect()->route('penyuplai.index');
     }
 }   

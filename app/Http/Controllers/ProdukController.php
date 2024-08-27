@@ -73,16 +73,33 @@ class ProdukController extends Controller
             'products_name'        => 'required',
             'buying_price'          => 'required',
             'selling_price'      => 'required',
+            'photo'          => 'nullable|mimes:png,jpg,jpeg|max:2048',
         ]);
 
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+
+        $find = Produk::find($id);
 
         $data['products_id']  = $request->products_id;
         $data['products_name']      = $request->products_name;
         $data['buying_price']        = $request->buying_price;
         $data['selling_price']    = $request->selling_price;
 
-        Produk::whereId($id)->update($data);
+        $photo = $request->file('photo');
+
+        if ($photo) {
+            $filename   =   date('Y-m-d').$photo->getClientOriginalName();
+            $path       =   'photo.user/'.$filename;
+
+            if ($find->photo) {
+                Storage::disk('public')->delete('photo.user/' . $find->photo);
+            }
+
+            Storage::disk('public')->put($path,file_get_contents($photo));
+            $data['photo']  =   $filename;
+        }
+
+        $find->update($data);
 
         return redirect()->route('produk.index');
     }

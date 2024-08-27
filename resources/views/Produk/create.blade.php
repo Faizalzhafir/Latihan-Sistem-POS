@@ -10,7 +10,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Beranda</a></li>
               <li class="breadcrumb-item"><a href="{{ route('produk.index')}}">Produk</a></li>
               <li class="breadcrumb-item active">Tambah Data Produk</li>
             </ol>
@@ -38,12 +38,22 @@
               <!-- form start -->
               <form>
                 <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Poto Produk</label>
-                    <input type="file" name="photo" class="form-control" id="exampleInputEmail1" >
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Photo</label>
+                    <input type="file" name="photo" class="form-control" id="exampleInputEmail1">
+                    <small>Upload the photo,if you want change it</small>
+                  @error('photo')
+                    <br>
+                    <small>{{ $message }}</small>
+                  @enderror
+                  </div>
+                  <!-- <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Pilih Poto Produk</label>
                   @error('photo')
                       <small>{{ $message }}</small>
                   @enderror
+                  </div> -->
                   <div class="form-group">
                     <label for="exampleInputEmail1">Kode Produk</label>
                     <input type="text" name="products_id" class="form-control" id="exampleInputEmail" placeholder="Masukkan kode produk">
